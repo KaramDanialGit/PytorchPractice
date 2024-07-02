@@ -8,14 +8,18 @@ weight = 0.3
 bias = 0.9
 epochs = 300
 
+
 class LinearRegressionModel(nn.Module):
     def __init__(self):
         super().__init__()
         self.weights = nn.Parameter(torch.randn(1, dtype=torch.float), requires_grad=True)
         self.bias = nn.Parameter(torch.randn(1, dtype=torch.float), requires_grad=True)
 
+    #     OR self.linear_layer = nn.Linear(in_features=1, out_features=1)
+
     def forward(self, x: torch.Tensor) -> torch.Tensor:
         return self.weights * x + self.bias
+    #     OR return self.linear_layer(x)
 
 
 x_data = torch.arange(1, 10, step).unsqueeze(dim=1)
@@ -58,3 +62,10 @@ MODEL_SAVE_PATH = SAVE_PATH / MODEL_NAME
 print(f"Saving model to: {MODEL_SAVE_PATH}")
 
 torch.save(obj=lin_model.state_dict(), f=MODEL_SAVE_PATH)
+
+# If we wanted to load a model:
+# # Instantiate a fresh instance of LinearRegressionModelV2
+# loaded_model_1 = LinearRegressionModelV2()
+#
+# # Load model state dict
+# loaded_model_1.load_state_dict(torch.load(MODEL_SAVE_PATH))
